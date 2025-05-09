@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Function Point Analysis Calculator</title>
+    <link rel="stylesheet" href="./css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/exceljs/dist/exceljs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 data-lang="title">FUNCTION POINT CALCULATION</h1>
+            <div class="header-right">
+                <div class="language-selector">
+                    <label data-lang="language">Language</label>
+                    <select id="language">
+                        <option value="english" selected>English</option>
+                        <option value="vietnamese">Vietnamese</option>
+                    </select>
+                </div>
+                
+            </div>
+        </header>
+
+        <!-- Project Information Section -->
+        <div class="project-info-section">
+            <h2 data-lang="projectInfo">Project Information</h2>
+            <div class="project-info-grid">
+                <div class="form-group">
+                    <label for="project-name" data-lang="projectName">Project Name:</label>
+                    <input type="text" id="project-name" data-lang-placeholder="enterProjectName" placeholder="Enter project name">
+                </div>
+                <div class="form-group">
+                    <label for="project-code" data-lang="projectCode">Project Code:</label>
+                    <input type="text" id="project-code" data-lang-placeholder="enterProjectCode" placeholder="Enter project code">
+                </div>
+                <div class="form-group">
+                    <label for="client-name" data-lang="client">Client:</label>
+                    <input type="text" id="client-name" data-lang-placeholder="enterClientName" placeholder="Enter client name">
+                </div>
+                <div class="form-group">
+                    <label for="analyst-name" data-lang="analyst">Analyst:</label>
+                    <input type="text" id="analyst-name" data-lang-placeholder="enterAnalystName" placeholder="Enter analyst name">
+                </div>
+                <div class="form-group">
+                    <label for="analysis-date" data-lang="analysisDate">Analysis Date:</label>
+                    <input type="date" id="analysis-date">
+                </div>
+                <div class="form-group">
+                    <label for="project-description" data-lang="description">Description:</label>
+                    <textarea id="project-description" data-lang-placeholder="enterProjectDescription" placeholder="Enter project description"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- File Controls Section -->
+        <div class="file-controls-section">
+            <div class="file-controls">
+                <button id="export-excel" data-lang="exportExcel">Export to Excel</button>
+                <button id="export-pdf" data-lang="exportPDF">Export to PDF</button>
+                <button id="export-html" data-lang="exportHTML">Export to HTML</button>
+                <button id="save-data" data-lang="saveData">Save Project</button>
+                <button id="load-data" data-lang="loadData">Import Project</button>
+                <input type="file" id="file-input" accept=".json" style="display: none;">
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="vaf-section">
+                <h2 data-lang="vafTitle">Value Adjustment Factors (VAF)</h2>
+                <table id="vaf-table">
+                    <thead>
+                        <tr>
+                            <th data-lang="no">No.</th>
+                            <th data-lang="vaf">VAF</th>
+                            <th data-lang="weight">Weight: 0 (low) - 5 (high)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td data-lang="vaf1">Data communications</td>
+                            <td><input type="number" min="0" max="5" value="0" class="vaf-input" onkeydown="return false" step="1"></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td data-lang="vaf2">Distributed data processing</td>
+                            <td><input type="number" min="0" max="5" value="0" class="vaf-input" onkeydown="return false" step="1"></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td data-lang="vaf3">Performance</td>
+                            <td><input type="number" min="0" max="5" value="0" class="vaf-input" onkeydown="return false" step="1"></td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td data-lang="vaf4">Heavily used configuration</td>
+                            <td><input type="number" min="0" max="5" value="0" class="vaf-input" onkeydown="return false" step="1"></td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td data-lang="vaf5">Transaction rate</td>
+                            <td><input type="number" min="0" max="5" value="0" class="vaf-input" onkeydown="return false" step="1"></td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td data-lang="vaf6">On-Line data entry</td>
+                            <td><input type="number" min="0" max="5" value="0" class="vaf-input" onkeydown="return false" step="1"></td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td data-lang="vaf7">End-user efficiency</td>
+                            <td><input type="number" min="0" max="5" value="0" class="vaf-input" onkeydown="return false" step="1"></td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td data-lang="vaf8">On-Line update</td>
+                            <td><input type="number" min="0" max="5" value="0" class="vaf-input" onkeydown="return false" step="1"></td>
+                        </tr>
+                        <tr>
+                            <td>9</td>
+                            <td data-lang="vaf9">Complex processing</td>
+                            <td><input type="number" min="0" max="5" value="0" class="vaf-input" onkeydown="return false" step="1"></td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td data-lang="vaf10">Reusability</td>
+                            <td><input type="number" min="0" max="5" value="0" class="vaf-input" onkeydown="return false" step="1"></td>
+                        </tr>
+                        <tr>
+                            <td>11</td>
+                            <td data-lang="vaf11">Installation ease</td>
+                            <td><input type="number" min="0" max="5" value="0" class="vaf-input" onkeydown="return false" step="1"></td>
+                        </tr>
+                        <tr>
+                            <td>12</td>
+                            <td data-lang="vaf12">Operational ease</td>
+                            <td><input type="number" min="0" max="5" value="0" class="vaf-input" onkeydown="return false" step="1"></td>
+                        </tr>
+                        <tr>
+                            <td>13</td>
+                            <td data-lang="vaf13">Multiple sites</td>
+                            <td><input type="number" min="0" max="5" value="0" class="vaf-input" onkeydown="return false" step="1"></td>
+                        </tr>
+                        <tr>
+                            <td>14</td>
+                            <td data-lang="vaf14">Facilitate change</td>
+                            <td><input type="number" min="0" max="5" value="0" class="vaf-input" onkeydown="return false" step="1"></td>
+                        </tr>
+                        <tr class="total-row">
+                            <td colspan="2" data-lang="total">Total</td>
+                            <td id="vaf-total">42</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="legend">
+                    <div class="legend-item">
+                        <span class="legend-key">FP:</span>
+                        <span class="legend-value" data-lang="legendFP">Function Point</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-key">VAF:</span>
+                        <span class="legend-value" data-lang="legendVAF">Value Added Factor</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-key">DET:</span>
+                        <span class="legend-value" data-lang="legendDET">Data Element Type</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-key">RET:</span>
+                        <span class="legend-value" data-lang="legendRET">Record Element Type</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-key">FTR:</span>
+                        <span class="legend-value" data-lang="legendFTR">File Types Referenced</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-key">ILF:</span>
+                        <span class="legend-value" data-lang="legendILF">Internal Logical Files</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-key">EIF:</span>
+                        <span class="legend-value" data-lang="legendEIF">External Interface Files</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-key">EI:</span>
+                        <span class="legend-value" data-lang="legendEI">External Inputs</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-key">EO:</span>
+                        <span class="legend-value" data-lang="legendEO">External Outputs</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-key">EQ:</span>
+                        <span class="legend-value" data-lang="legendEQ">External Inquiry</span>
+                    </div>
+                </div>
+                <div>
+                    <div class="adjusted-fp">
+                        <label data-lang="adjustedFP">Adjusted FP</label>
+                        <input type="text" id="adjusted-fp-display" readonly value="0">
+                    </div>
+                    <div class="unadjusted-fp">
+                        <label data-lang="unadjustedFP">Unadjusted FP</label>
+                        <input type="text" id="unadjusted-fp-display" readonly value="0">
+                    </div>
+                </div>
+                
+                
+            </div>
+
+            <div class="function-section">
+                <h2 data-lang="functionDetails">Function Point Details</h2>
+                <table id="function-table">
+                    <thead>
+                        <tr>
+                            <th data-lang="no">No.</th>
+                            <th data-lang="module">Module</th>
+                            <th data-lang="functionName">Function Name</th>
+                            <th data-lang="description">Description</th>
+                            <th data-lang="type">Type</th>
+                            <th data-lang="det">DET</th>
+                            <th data-lang="retFtr">RET/FTR</th>
+                            <th data-lang="complexity">Complexity</th>
+                            <th data-lang="fp">FP</th>
+                            <th data-lang="adjust">Adjust</th>
+                            <th data-lang="fpAdjusted">FP adjusted</th>
+                            <th data-lang="remarks">Remarks</th>
+                            <th data-lang="action">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="function-table-body">
+                        <!-- Function rows will be added dynamically -->
+                    </tbody>
+                </table>
+
+                <div class="function-controls">
+                    <button id="add-function" data-lang="addFunction">Add Function</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Function Modal -->
+        <div id="function-modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2 data-lang="addEditFunction">Add/Edit Function</h2>
+                <form id="function-form">
+                    <input type="hidden" id="edit-index" value="-1">
+                    <div class="form-group">
+                        <label for="module" data-lang="module">Module:</label>
+                        <input type="text" id="module" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="function-name" data-lang="functionName">Function Name:</label>
+                        <input type="text" id="function-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="description" data-lang="description">Description:</label>
+                        <input type="text" id="description">
+                    </div>
+                    <div class="form-group">
+                        <label for="type" data-lang="type">Type:</label>
+                        <select id="type" required>
+                            <option value="ILF">ILF</option>
+                            <option value="EIF">EIF</option>
+                            <option value="EI">EI</option>
+                            <option value="EO">EO</option>
+                            <option value="EQ">EQ</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="det" data-lang="det">DET:</label>
+                        <input type="number" id="det" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ret-ftr" data-lang="retFtr">RET/FTR:</label>
+                        <input type="number" id="ret-ftr" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="remarks" data-lang="remarks">Remarks:</label>
+                        <input type="text" id="remarks">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" data-lang="save">Save</button>
+                        <button type="button" id="cancel-function" data-lang="cancel">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden div for HTML report template -->
+    <div id="report-template" style="display: none;">
+        <!-- This will be populated by JavaScript when exporting HTML -->
+    </div>
+
+    <script src="./js/script.js"></script>
+</body>
+</html>
