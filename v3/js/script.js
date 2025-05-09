@@ -1231,17 +1231,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     throw new Error('Invalid JSON file structure');
                 }
 
-                // Validate project info
                 if (data.projectInfo) {
                     if (typeof data.projectInfo !== 'object') {
                         throw new Error('Invalid project info format');
                     }
                     
-                    if (!data.projectInfo.projectName || typeof data.projectInfo.projectName !== 'string') {
-                        throw new Error('Invalid project name');
-                    }
                     
-                    projectName.value = data.projectInfo.projectName;
+                    projectName.value = data.projectInfo.projectName || "";
                     projectCode.value = data.projectInfo.projectCode || '';
                     clientName.value = data.projectInfo.clientName || '';
                     analystName.value = data.projectInfo.analystName || '';

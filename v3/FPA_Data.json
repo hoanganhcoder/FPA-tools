@@ -1,11 +1,11 @@
 {
   "projectInfo": {
-    "projectName": "",
-    "projectCode": "",
-    "clientName": "",
-    "analystName": "",
-    "analysisDate": "2025-05-05",
-    "projectDescription": ""
+    "projectName": "FPA Analysis System",
+    "projectCode": "FPA2024",
+    "clientName": "DTU",
+    "analystName": "Nguyen Van A",
+    "analysisDate": "2025-06-10",
+    "projectDescription": "Function Point Analysis for business application modules."
   },
   "vafValues": [
     3,
